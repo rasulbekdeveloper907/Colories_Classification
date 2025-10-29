@@ -40,22 +40,46 @@ class Encoder:
     def get_df(self):
         return self.df 
     
-    import pandas as pd
 from sklearn.preprocessing import StandardScaler
+import pandas as pd
 
 class Scaler:
-    def __init__(self, df):
-        self.df = df
+    def __init__(self, df, target_col=None):
+        """
+        df: DataFrame
+        target_col: Target ustun nomi (str), scalingdan chiqarib tashlanadi
+        """
+        self.df = df.copy()
+        self.target_col = target_col
         self.scaler = StandardScaler()
 
     def scaling_qil(self):
-        numeric_cols = self.df.select_dtypes(include=['int64']).columns
-        self.df[numeric_cols] = pd.DataFrame(
-            self.scaler.fit_transform(self.df[numeric_cols]),
+        # Target ustunni ajratamiz (agar ko‘rsatilgan bo‘lsa)
+        if self.target_col and self.target_col in self.df.columns:
+            target = self.df[self.target_col]
+            df_temp = self.df.drop(columns=[self.target_col])
+        else:
+            target = None
+            df_temp = self.df
+
+        # Faqat raqamli ustunlarni tanlaymiz
+        numeric_cols = df_temp.select_dtypes(include=['int64', 'float64']).columns
+
+        # Skalalash
+        df_temp[numeric_cols] = pd.DataFrame(
+            self.scaler.fit_transform(df_temp[numeric_cols]),
             columns=numeric_cols,
-            index=self.df.index
+            index=df_temp.index
         )
+
+        # Agar target bor bo‘lsa, uni qaytadan qo‘shamiz
+        if target is not None:
+            df_temp[self.target_col] = target
+
+        # Yangi DataFrame’ni saqlaymiz
+        self.df = df_temp
         return self
 
     def get_df(self):
         return self.df
+
