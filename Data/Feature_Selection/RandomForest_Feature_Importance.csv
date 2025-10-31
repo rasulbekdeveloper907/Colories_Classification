@@ -1,0 +1,13 @@
+Feature,Importance,Top15%
+product_age_days,0.15322318227395149,Yes
+Unnamed: 0,0.14903936286738895,Yes
+quantity_value,0.12406002975196118,No
+main_category_encoded,0.12386684192906804,No
+category_depth,0.10027483895187368,No
+created_month,0.09625618931093882,No
+name_length,0.07775268910288961,No
+created_year,0.07683409228404506,No
+country_count,0.05791182627679177,No
+quantity_unit_encoded,0.0347191935119381,No
+is_organic,0.006061753739153307,No
+is_sugar_free,0.0,No

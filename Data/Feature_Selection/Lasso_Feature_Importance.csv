@@ -1,0 +1,13 @@
+Feature,Importance,Top15%
+created_year,0.13311438456242763,Yes
+category_depth,0.09755359301257288,Yes
+is_organic,0.08637736363520937,No
+quantity_unit_encoded,0.05709202490245622,No
+country_count,0.03963121294028171,No
+main_category_encoded,0.0379597075808752,No
+quantity_value,0.00989917101435921,No
+product_age_days,0.008308321774413817,No
+created_month,0.00417037347129194,No
+Unnamed: 0,2.1615034906371472e-06,No
+is_sugar_free,0.0,No
+name_length,0.0,No
