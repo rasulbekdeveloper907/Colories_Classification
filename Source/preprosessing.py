@@ -23,22 +23,34 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
 class Encoder:
-    def __init__(self, df):
-        self.df = df
+    def __init__(self, df, target_col=None):
+        """
+        df : pandas DataFrame
+        target_col : target ustun nomi (kodlanmasligi kerak bo‘lgan)
+        """
+        self.df = df.copy()
+        self.target_col = target_col
         self.encoder = LabelEncoder()
 
     def encodla(self):
         for col in self.df.columns:
+            # 🎯 Target ustunni tashlab o‘tish
+            if col == self.target_col:
+                continue
+
             if self.df[col].dtype == 'object':
                 if self.df[col].nunique() <= 5:
+                    # 🌈 Kam qiymatlar uchun one-hot encoding
                     dummies = pd.get_dummies(self.df[col], prefix=col, dtype=int)
                     self.df = pd.concat([self.df.drop(columns=[col]), dummies], axis=1)
                 else:
-                    self.df[col] = self.encoder.fit_transform(self.df[col])
+                    # 🔢 Ko‘p qiymatlar uchun label encoding
+                    self.df[col] = self.encoder.fit_transform(self.df[col].astype(str))
         return self
 
     def get_df(self):
-        return self.df 
+        return self.df
+
     
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
